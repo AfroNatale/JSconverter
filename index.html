@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <title>Konwerter wyrażeń arytmetycznych</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="./assets/js/stack.js"></script>
+  <script src="./assets/js/converter.js"></script>
+  <script src="./assets/js/validate.js"></script>
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Konwerter wyrażeń arytmetycznych</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="index.html">Konwertery</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container text-center">    
+  <div class="row content">
+    <div class="col-sm-12 text-center"> 
+	</br>
+	<div class="jumbotron">
+    <h1>Jak korzystać</h1> 
+    <p>Wyrażenie do przekształcenia należy wpisywać oddzielając każdy element spacją.</br>
+	Na przykład: ( 21 + 4 ) * B</br>
+	Dozwolone operatory: +, -, *, /, ^</p> 
+  </div>
+	<center>
+<div class="panel panel-primary">
+  <div class="panel-heading">Konwerter z postaci infiksowej na postfiksową</div>
+  <div class="panel-body">
+	<p id="info1"></p>
+    <form class="form" name="input_infixToPostfix">
+		<div class="form-group">
+		  <div class="input-group">
+			<span class="input-group-addon">Infiks</span>
+			<input type="text" class="form-control" name="infixVal" placeholder="21 + 4" value="">
+			</div>
+		</div>
+		<div class="form-group">
+		  <div class="input-group">
+			<span class="input-group-addon">Postfiks</span>
+			<input type="text" class="form-control" name="postfixVal" placeholder="" value="">
+			</div>
+		</div>
+		<input type="button" onClick="document.input_infixToPostfix.postfixVal.value=InfixToPostfix(document.input_infixToPostfix.infixVal.value)" value="Infix > Postfix" class="btn btn-default">
+	</form>
+	</div>
+    </div>
+	
+	<div class="panel panel-default">
+  <div class="panel-heading">Konwerter z postaci postfiksowej na infiksową</div>
+  <div class="panel-body">
+  	<p id="info2"></p>
+    <form class="form" name="input_postfixToInfix">
+		<div class="form-group">
+		  <div class="input-group">
+			<span class="input-group-addon">Postfiks</span>
+			<input id="postfixVal" type="text" class="form-control" name="postfixVal" placeholder="21 4 +">
+			</div>
+		</div>
+		<div class="form-group">
+		  <div class="input-group">
+			<span class="input-group-addon">Infiks</span>
+			<input id="infixVal" type="text" class="form-control" name="infixVal" placeholder="">
+			</div>
+		</div>
+		<input type="button" onClick="document.input_postfixToInfix.infixVal.value=PostfixToInfix(document.input_postfixToInfix.postfixVal.value)" value="Postfix > Infix" class="btn btn-default">
+	</form>
+	</div>
+</div>
+
+<hr><hr>
+
+	<div class="panel panel-primary">
+  <div class="panel-heading">Konwerter z postaci infiksowej na prefiksową</div>
+  <div class="panel-body">
+  	<p id="info3"></p>
+    <form class="form" name="input_infixToPrefix">
+		<div class="form-group">
+		  <div class="input-group">
+			<span class="input-group-addon">Infiks</span>
+			<input id="infixVal" type="text" class="form-control" name="infixVal" placeholder="21 + 4">
+			</div>
+		</div>
+		<div class="form-group">
+		  <div class="input-group">
+			<span class="input-group-addon">Prefiks</span>
+			<input id="prefixVal" type="text" class="form-control" name="prefixVal" placeholder="">
+			</div>
+		</div>
+		<input type="button" onClick="document.input_infixToPrefix.prefixVal.value=InfixToPrefix(document.input_infixToPrefix.infixVal.value)" value="Infix > Prefix" class="btn btn-default">
+	</form>
+	</div>
+</div>
+	<div class="panel panel-default">
+  <div class="panel-heading">Konwerter z postaci prefiksowej na infiksową</div>
+  <div class="panel-body">
+  	<p id="info4"></p>
+    <form class="form" name="input_prefixToInfix">
+		<div class="form-group">
+		  <div class="input-group">
+			<span class="input-group-addon">Prefiks</span>
+			<input id="prefixVal" type="text" class="form-control" name="prefixVal" placeholder="+ 21 4">
+			</div>
+		</div>
+		<div class="form-group">
+		  <div class="input-group">
+			<span class="input-group-addon">Infiks</span>
+			<input id="infixVal" type="text" class="form-control" name="infixVal" placeholder="">
+			</div>
+		</div>
+		<input type="button" onClick="document.input_prefixToInfix.infixVal.value=PrefixToInfix(document.input_prefixToInfix.prefixVal.value)" value="Prefix > Infix" class="btn btn-default">
+	</form>
+	</div>
+</div>
+    </div>
+	</center>
+  </div>
+</div>
+
+<footer class="container-fluid text-center">
+  <p>Wykonane przez: Artemiusz Znojek</p>
+</footer>
+
+</body>
+</html>
